@@ -1,1 +1,31 @@
-spring.application.name=wms01
+spring:
+  datasource:
+    url: jdbc:sqlite:D:/wms01/db/wms.db  # SQLite 数据库文件路径
+    driver-class-name: org.sqlite.JDBC    # SQLite JDBC 驱动
+    username: ""                          # SQLite 不需要用户名
+    password: ""                          # SQLite 不需要密码
+    platform: sqlite                      # 设置平台为 SQLite（一般不需要）
+    initialization-mode: embedded           # 启动时初始化数据库（可选）
+
+  hikari:
+    maximum-pool-size: 10  # 最大连接池大小（根据需求调整，SQLite 通常并不需要很大的连接池）
+
+  mybatis-plus:
+    mapper-locations: classpath*:/mappers/*.xml
+    type-aliases-package: com.swiftsprinttech.wms01.domain.entity   # 实体类所在包路径
+    global-config:
+      db-config:
+        id-type: auto  # SQLite 的主键策略，使用 auto 来自动生成主键（或根据实际需求使用 'input'）
+        logic-delete-value: 1  # 逻辑删除标识（可选）
+        logic-not-delete-value: 0  # 逻辑删除标识（可选）
+    configuration:
+      map-underscore-to-camel-case: true  # 下划线转驼峰
+
+logging:
+  level:
+    root: INFO                             # 设置日志级别
+    org.springframework: WARN              # 设置 Spring 相关日志级别
+
+server:
+  address: 127.0.0.1     # 本地访问
+  port: 8100            # 设置服务器端口（默认是 8100）
